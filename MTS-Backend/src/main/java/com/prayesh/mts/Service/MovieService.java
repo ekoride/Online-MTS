@@ -20,4 +20,6 @@ public interface MovieService {
     public MovieResponse getMovieDetails(String movieId);
 
     public List<Movie> getUpcomingMovies();
+
+    public List<Movie> getPastMovies();
 }

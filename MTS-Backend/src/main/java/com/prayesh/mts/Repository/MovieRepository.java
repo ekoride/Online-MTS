@@ -60,6 +60,10 @@ public interface MovieRepository extends JpaRepository<Movie, Long>{
     @Query(value = "SELECT * FROM MOVIE M WHERE M.MOVIE_RELEASE_DATE > ?1",
             nativeQuery = true)
     public List<Movie> getUpcomingMovies(Date currentDate);
+
+    @Query(value = "SELECT * FROM MOVIE M WHERE M.MOVIE_END_DATE < ?1",
+            nativeQuery = true)
+    public List<Movie> getPastMovies(Date currentDate);
 }
 
 

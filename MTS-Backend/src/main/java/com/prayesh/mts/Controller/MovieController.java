@@ -57,6 +57,13 @@ public class MovieController {
 
 
 
+
+    @GetMapping("/getPastMovies")
+    public ResponseEntity<List<Movie>> getPastMovies(){
+        return ResponseEntity.ok(movieService.getPastMovies());
+    }
+
+
     @GetMapping("/getUpcomingMovies")
     public ResponseEntity<List<Movie>> getUpcomingMovies(){
         return ResponseEntity.ok(movieService.getUpcomingMovies());

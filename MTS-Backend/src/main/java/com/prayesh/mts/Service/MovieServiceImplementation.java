@@ -59,6 +59,24 @@ public class MovieServiceImplementation implements MovieService{
 
 
 
+
+
+
+
+
+    @Override
+    public List<Movie> getPastMovies() {
+        try{
+            Date currentDate = new Date();
+            return movieRepository.getPastMovies(currentDate);
+        }catch(HibernateException ex){
+            throw new DBException(ex.getMessage());
+        }catch(Exception ex){
+            throw new SystemException(ex.getMessage());
+        }
+    }
+
+
     @Override
     public List<Movie> getUpcomingMovies() {
         try{
@@ -70,6 +88,8 @@ public class MovieServiceImplementation implements MovieService{
             throw new SystemException(ex.getMessage());
         }
     }
+
+
 
     @Override
     public List<Movie> getCurrentMovies() {
