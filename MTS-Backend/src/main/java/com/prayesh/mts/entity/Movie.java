@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -64,10 +65,11 @@ public class Movie {
     private Date movieReleaseDate;
     @Column(name = "movie_duration")
     @NotEmpty(message = "Enter movie duration")
-    private int movieDurationMin;
+    private Integer movieDurationMin;
     @Column(name = "movie_endDate")
     @JsonFormat(pattern = "yyyy-MM-dd")
     @NotBlank(message = "End Date cannot be null")
+    @Future(message = "End date cannot be from the past")
     private Date movieEndDate;
 
     // private Date startDate;   AddMovie API -> Sets the current date to start date
