@@ -61,6 +61,8 @@ public class MovieServiceImplementation implements MovieService{
 
 
 
+
+
     @Override
     public Movie saveMovie(Movie movie) {
         try{
@@ -73,7 +75,10 @@ public class MovieServiceImplementation implements MovieService{
             return movieRepository.save(movie);
         }catch(HibernateException ex){
             throw new DBException(ex.getMessage());
-        }catch(Exception ex){
+        }catch (InvalidArgumentException ex){
+            throw new InvalidArgumentException(ex.getMessage());
+        }
+        catch(Exception ex){
             throw new SystemException(ex.getMessage());
         }
 

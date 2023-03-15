@@ -61,14 +61,14 @@ public class Movie {
     private String movieDescription;
     @Column(name = "movie_releaseDate")
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @NotBlank(message = "Release Date cannot be null")
+    @NotNull(message = "Release Date cannot be null")
     private Date movieReleaseDate;
     @Column(name = "movie_duration")
-    @NotEmpty(message = "Enter movie duration")
+    @NotNull(message = "Enter movie duration")
     private Integer movieDurationMin;
     @Column(name = "movie_endDate")
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @NotBlank(message = "End Date cannot be null")
+    @NotNull(message = "End Date cannot be null")
     @Future(message = "End date cannot be from the past")
     private Date movieEndDate;
 
