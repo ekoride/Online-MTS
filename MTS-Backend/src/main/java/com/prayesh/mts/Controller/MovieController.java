@@ -23,10 +23,7 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
 
-    @GetMapping("/getAllMovies")
-    public List<Movie> getAllMovies(){
-        return movieService.getAllMovies(); // What if no movies are returned, Error? 
-    }
+
 
     //Change to Only available movies.
     @GetMapping("/getMovieByName/{name}")
@@ -63,7 +60,10 @@ public class MovieController {
 
 
 
-
+    @GetMapping("/getAllMovies")
+    public ResponseEntity<List<Movie>> getAllMovies(){
+        return ResponseEntity.ok(movieService.getAllMovies()); // What if no movies are returned, Error?
+    }
     
     @PostMapping("/addNewMovie")
     public ResponseEntity<Movie> postMovie(@RequestBody @Valid Movie movie){

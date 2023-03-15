@@ -20,10 +20,7 @@ public class MovieServiceImplementation implements MovieService{
     @Autowired
     private MovieRepository movieRepository;
 
-    @Override
-    public List<Movie> getAllMovies() {
-        return movieRepository.findAllThatAreShowingNow();
-    }
+
 
 
 
@@ -61,7 +58,18 @@ public class MovieServiceImplementation implements MovieService{
 
 
 
+    @Override
+    public List<Movie> getAllMovies() {
+        try{
+            Date currentDate = new Date();
+            return movieRepository.findAllThatAreShowingNow(currentDate);
+        }catch(HibernateException ex){
+            throw new DBException(ex.getMessage());
+        }catch(Exception ex){
+            throw new SystemException(ex.getMessage());
+        }
 
+    }
 
     @Override
     public Movie saveMovie(Movie movie) {
