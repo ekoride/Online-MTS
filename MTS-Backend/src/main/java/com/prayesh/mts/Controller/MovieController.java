@@ -57,12 +57,15 @@ public class MovieController {
 
 
 
-
+    @GetMapping("/getUpcomingMovies")
+    public ResponseEntity<List<Movie>> getUpcomingMovies(){
+        return ResponseEntity.ok(movieService.getUpcomingMovies());
+    }
 
 
     @GetMapping("/getAllMovies")
     public ResponseEntity<List<Movie>> getAllMovies(){
-        return ResponseEntity.ok(movieService.getAllMovies()); // What if no movies are returned, Error?
+        return ResponseEntity.ok(movieService.getCurrentMovies()); // What if no movies are returned, Error?
     }
     
     @PostMapping("/addNewMovie")

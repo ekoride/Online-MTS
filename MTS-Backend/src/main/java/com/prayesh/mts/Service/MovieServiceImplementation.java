@@ -41,6 +41,8 @@ public class MovieServiceImplementation implements MovieService{
         return movieRepository.fetchCompleteMovieDetails(movieId);
     }
 
+
+
     @Override
     public Movie movieByName(String movieName) {
         return movieRepository.findMovieByName(movieName);
@@ -57,9 +59,20 @@ public class MovieServiceImplementation implements MovieService{
 
 
 
+    @Override
+    public List<Movie> getUpcomingMovies() {
+        try{
+            Date currentDate = new Date();
+            return movieRepository.getUpcomingMovies(currentDate);
+        }catch(HibernateException ex){
+            throw new DBException(ex.getMessage());
+        }catch(Exception ex){
+            throw new SystemException(ex.getMessage());
+        }
+    }
 
     @Override
-    public List<Movie> getAllMovies() {
+    public List<Movie> getCurrentMovies() {
         try{
             Date currentDate = new Date();
             return movieRepository.findAllThatAreShowingNow(currentDate);

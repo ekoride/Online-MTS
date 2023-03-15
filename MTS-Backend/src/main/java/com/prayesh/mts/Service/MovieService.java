@@ -7,7 +7,7 @@ import com.prayesh.mts.entity.Movie;
 
 public interface MovieService {
 
-    public List<Movie> getAllMovies();
+    public List<Movie> getCurrentMovies();
 
     public Movie movieByName(String movieName);
 
@@ -18,5 +18,6 @@ public interface MovieService {
     public List<Movie> findByMovieLanguage(String language);
 
     public MovieResponse getMovieDetails(String movieId);
-    
+
+    public List<Movie> getUpcomingMovies();
 }
