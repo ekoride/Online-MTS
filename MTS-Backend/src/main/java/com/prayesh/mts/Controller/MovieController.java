@@ -3,6 +3,8 @@ package com.prayesh.mts.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,10 +52,18 @@ public class MovieController {
     //     return movieService.movieByCast(castName);
     // }
 
-    
+
+
+
+
+
+
+
+
+
     @PostMapping("/addNewMovie")
-    public Movie postMovie(@RequestBody @Valid Movie movie){
-        return movieService.saveMovie(movie);
+    public ResponseEntity<Movie> postMovie(@RequestBody @Valid Movie movie){
+        return new ResponseEntity<>(movieService.saveMovie(movie), HttpStatus.CREATED);
     }
 }
 
