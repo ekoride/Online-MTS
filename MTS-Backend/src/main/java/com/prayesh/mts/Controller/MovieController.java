@@ -80,13 +80,13 @@ public class MovieController {
         return ResponseEntity.ok(movieService.getUpcomingMovies());
     }
 
-    @CrossOrigin(origins="http://localhost:3000/")
+    //@CrossOrigin(origins="http://localhost:3000/")
     @GetMapping("/getAllMovies")
     public ResponseEntity<List<Movie>> getAllMovies(){
         return ResponseEntity.ok(movieService.getCurrentMovies()); // What if no movies are returned, Error?
     }
     
-    @CrossOrigin(origins="http://localhost:3000/")
+    //@CrossOrigin(origins="http://localhost:3000/")
     @PostMapping("/addNewMovie")
     public ResponseEntity<Movie> postMovie(@RequestBody @Valid Movie movie){
         return new ResponseEntity<>(movieService.saveMovie(movie), HttpStatus.CREATED);

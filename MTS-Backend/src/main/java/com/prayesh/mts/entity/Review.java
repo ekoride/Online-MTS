@@ -41,14 +41,16 @@ public class Review {
     @ManyToOne(targetEntity = Movie.class)
     @JoinColumn(
         name = "review_movie",
-        referencedColumnName = "movieId"
+        referencedColumnName = "movieId",
+        nullable = false
     )
     private Movie movieId;
     //@Column(name = "review_user", nullable = false)
     @OneToOne
     @JoinColumn(
         name = "review_userId",
-        referencedColumnName = "userId"
+        referencedColumnName = "userId",
+        nullable = false
     )
     private user customerId;
     @Column(name = "user_review", nullable = false)
