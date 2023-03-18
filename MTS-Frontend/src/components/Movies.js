@@ -1,7 +1,23 @@
 import React from 'react'
-import {Card, Table} from 'react-bootstrap';
-
+import { useState, useEffect } from 'react';
+import {Card, Table, Button, ButtonGroup} from 'react-bootstrap';
+import axios from 'axios'
 export default function Movies() {
+    const [movies, setMovies] = useState([]);
+    useEffect(() =>{
+        getMovies()
+    }, [])
+
+    // add the api call here to fetch all the movies
+    function getMovies(){
+        axios.get("http://localhost:8080/getAllMovies")
+            .then((response) => {
+                setMovies(response.data)
+            })
+
+    }
+
+    // upcoming movies
   return (
     <Card className='mt-5 border border-light bg-light text-black'>
         <Card.Header>Movies</Card.Header>
@@ -11,28 +27,36 @@ export default function Movies() {
                     <tr>
                     <th>#</th>
                     <th>Movie Name</th>
-                    <th>Review</th>
+                    <th>Genre</th>
+                    <th>Language</th>
                     <th>Rating</th>
+                    <th>Release Date</th>
+                    <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <td>1</td>
-                    <td>Jumanji</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    </tr>
-                    <tr>
-                    <td>2</td>
-                    <td>Pushpa</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    </tr>
-                    <tr>
-                    <td>3</td>
-                    <td colSpan={2}>Larry the Bird</td>
-                    <td>@twitter</td>
-                    </tr>
+                        {movies.length === 0 ?
+                            <tr align="center">
+                                <td colSpan='7'>{movies.length} No Movies available</td>
+                            </tr> :
+                            movies.map((movie, count) => (
+                                <tr key={movie.id}>
+                                    <td>{count+1}</td>
+                                    <td>{movie.movieName}</td>
+                                    <td>{movie.movieGenre}</td>
+                                    <td>{movie.movieLanguage}</td>
+                                    <td>{movie.movieRating}</td>
+                                    <td>{movie.movieReleaseDate}</td>
+                                    <td> 
+                                        <ButtonGroup>
+                                            <Button size='sm' variant='outline-primary'>
+                                                View
+                                            </Button>{' '}
+                                        </ButtonGroup>
+                                    </td>
+                                </tr>
+                            ))
+                    }
                 </tbody>
             </Table>
         </Card.Body>

@@ -7,6 +7,7 @@ import Welcome from './components/Welcome';
 import {Container, Row} from 'react-bootstrap';
 import Footer from './components/Footer';
 import Movies from './components/Movies';
+import AddMovie from './components/addMovie';
 function App() {
   return (
     <Router>
@@ -16,10 +17,11 @@ function App() {
           <Routes>
             <Route path="/"  element={<Welcome />}></Route>
             <Route path="/movies" element={<Movies />}></Route>
+            <Route path="/addMovie" element={<AddMovie />}></Route>
           </Routes>
         </Row>
       </Container>
-      <Footer />
+      {/* <Footer /> */}
     </Router>
   );
 }
