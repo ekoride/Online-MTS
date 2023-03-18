@@ -73,4 +73,11 @@ public class RestResponseEntityExceptionalHandler {
         // return errorMap;
     }
 
+
+    @ExceptionHandler(MovieNotFoundException.class)
+    public ResponseEntity<ErrorMessage> handleMovieNotFoundException(MovieNotFoundException ex){
+        ErrorMessage message = new ErrorMessage((HttpStatus.NOT_FOUND), ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+    }
+
 }

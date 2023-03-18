@@ -1,7 +1,9 @@
 package com.prayesh.mts.Controller;
 
 import java.util.List;
+import java.util.Optional;
 
+import com.prayesh.mts.Advice.MovieNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,6 +59,14 @@ public class MovieController {
 
 
 
+
+
+
+
+    @GetMapping("/{movieId}")
+    public ResponseEntity<Optional<Movie>> getMovieById(@PathVariable @Valid long movieId){
+        return ResponseEntity.ok(movieService.findMovieById(movieId));
+    }
 
 
     @GetMapping("/getPastMovies")

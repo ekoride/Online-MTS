@@ -2,9 +2,11 @@ package com.prayesh.mts.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import com.prayesh.mts.Advice.DBException;
 import com.prayesh.mts.Advice.InvalidArgumentException;
+import com.prayesh.mts.Advice.MovieNotFoundException;
 import com.prayesh.mts.Advice.SystemException;
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +67,20 @@ public class MovieServiceImplementation implements MovieService{
 
 
     @Override
+    public Optional<Movie> findMovieById(long movieId){
+        try{
+            Optional<Movie> requestMovie = movieRepository.findById(movieId);
+            return requestMovie;
+        }catch(HibernateException ex){
+            throw new DBException(ex.getMessage());
+        }catch(Exception ex){
+            throw new SystemException(ex.getMessage());
+        }
+
+    }
+
+
+    @Override
     public List<Movie> getPastMovies() {
         try{
             Date currentDate = new Date();
@@ -75,6 +91,7 @@ public class MovieServiceImplementation implements MovieService{
             throw new SystemException(ex.getMessage());
         }
     }
+
 
 
     @Override
