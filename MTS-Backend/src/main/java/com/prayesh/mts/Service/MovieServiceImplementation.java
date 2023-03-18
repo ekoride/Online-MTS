@@ -1,7 +1,12 @@
 package com.prayesh.mts.Service;
 
+import java.util.Date;
 import java.util.List;
 
+import com.prayesh.mts.Advice.DBException;
+import com.prayesh.mts.Advice.InvalidArgumentException;
+import com.prayesh.mts.Advice.SystemException;
+import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,20 +20,11 @@ public class MovieServiceImplementation implements MovieService{
     @Autowired
     private MovieRepository movieRepository;
 
-    @Override
-    public List<Movie> getAllMovies() {
-        return movieRepository.findAllThatAreShowingNow();
-    }
 
-    @Override
-    public Movie movieByName(String movieName) {
-        return movieRepository.findMovieByName(movieName);
-    }
 
-    @Override
-    public Movie saveMovie(Movie movie) {
-        return movieRepository.save(movie);
-    }
+
+
+
 
     @Override
     public List<Movie> movieByCast(String castName) {
@@ -45,5 +41,87 @@ public class MovieServiceImplementation implements MovieService{
         return movieRepository.fetchCompleteMovieDetails(movieId);
     }
 
-    
+
+
+    @Override
+    public Movie movieByName(String movieName) {
+        return movieRepository.findMovieByName(movieName);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @Override
+    public List<Movie> getPastMovies() {
+        try{
+            Date currentDate = new Date();
+            return movieRepository.getPastMovies(currentDate);
+        }catch(HibernateException ex){
+            throw new DBException(ex.getMessage());
+        }catch(Exception ex){
+            throw new SystemException(ex.getMessage());
+        }
+    }
+
+
+    @Override
+    public List<Movie> getUpcomingMovies() {
+        try{
+            Date currentDate = new Date();
+            return movieRepository.getUpcomingMovies(currentDate);
+        }catch(HibernateException ex){
+            throw new DBException(ex.getMessage());
+        }catch(Exception ex){
+            throw new SystemException(ex.getMessage());
+        }
+    }
+
+
+
+    @Override
+    public List<Movie> getCurrentMovies() {
+        try{
+            Date currentDate = new Date();
+            return movieRepository.findAllThatAreShowingNow(currentDate);
+        }catch(HibernateException ex){
+            throw new DBException(ex.getMessage());
+        }catch(Exception ex){
+            throw new SystemException(ex.getMessage());
+        }
+
+    }
+
+    @Override
+    public Movie saveMovie(Movie movie) {
+        try{
+            Date release = movie.getMovieReleaseDate();
+            Date end = movie.getMovieEndDate();
+            //Date currentDate = new Date();
+            if(release.compareTo(end)>0){
+                throw new InvalidArgumentException("Release date cannot be after end date");
+            }
+            return movieRepository.save(movie);
+        }catch(HibernateException ex){
+            throw new DBException(ex.getMessage());
+        }catch (InvalidArgumentException ex){
+            throw new InvalidArgumentException(ex.getMessage());
+        }
+        catch(Exception ex){
+            throw new SystemException(ex.getMessage());
+        }
+
+    }
 }

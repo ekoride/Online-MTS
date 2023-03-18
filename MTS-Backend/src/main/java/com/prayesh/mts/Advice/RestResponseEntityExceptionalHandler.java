@@ -42,6 +42,12 @@ public class RestResponseEntityExceptionalHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(message);
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(InvalidArgumentException.class)
+    public ResponseEntity<ErrorMessage> handleInvalidArguments(InvalidArgumentException ex){
+        ErrorMessage message = new ErrorMessage(HttpStatus.BAD_REQUEST, ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+    }
 
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

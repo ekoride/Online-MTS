@@ -3,6 +3,8 @@ package com.prayesh.mts.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,10 +23,7 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
 
-    @GetMapping("/getAllMovies")
-    public List<Movie> getAllMovies(){
-        return movieService.getAllMovies(); // What if no movies are returned, Error? 
-    }
+
 
     //Change to Only available movies.
     @GetMapping("/getMovieByName/{name}")
@@ -50,10 +49,35 @@ public class MovieController {
     //     return movieService.movieByCast(castName);
     // }
 
+
+
+
+
+
+
+
+
+
+    @GetMapping("/getPastMovies")
+    public ResponseEntity<List<Movie>> getPastMovies(){
+        return ResponseEntity.ok(movieService.getPastMovies());
+    }
+
+
+    @GetMapping("/getUpcomingMovies")
+    public ResponseEntity<List<Movie>> getUpcomingMovies(){
+        return ResponseEntity.ok(movieService.getUpcomingMovies());
+    }
+
+
+    @GetMapping("/getAllMovies")
+    public ResponseEntity<List<Movie>> getAllMovies(){
+        return ResponseEntity.ok(movieService.getCurrentMovies()); // What if no movies are returned, Error?
+    }
     
     @PostMapping("/addNewMovie")
-    public Movie postMovie(@RequestBody @Valid Movie movie){
-        return movieService.saveMovie(movie);
+    public ResponseEntity<Movie> postMovie(@RequestBody @Valid Movie movie){
+        return new ResponseEntity<>(movieService.saveMovie(movie), HttpStatus.CREATED);
     }
 }
 

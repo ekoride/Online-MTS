@@ -1,5 +1,6 @@
 package com.prayesh.mts.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,10 +30,7 @@ public interface MovieRepository extends JpaRepository<Movie, Long>{
     )
     public List<Movie> getMovieByLanguage(String language);
 
-    @Query(value = "SELECT * FROM MOVIE m where m.movie_isAvailable = true",
-        nativeQuery = true
-    )
-    public List<Movie> findAllThatAreShowingNow();
+
 
 
 
@@ -42,6 +40,30 @@ public interface MovieRepository extends JpaRepository<Movie, Long>{
             nativeQuery = true
     )
     public MovieResponse fetchCompleteMovieDetails(String movieId);
+
+
+
+
+
+
+
+
+
+
+
+
+    @Query(value = "SELECT * FROM MOVIE m where m.movie_end_date >= ?1 and m.movie_release_date <= ?1",
+            nativeQuery = true
+    )
+    public List<Movie> findAllThatAreShowingNow(Date currentDate);
+
+    @Query(value = "SELECT * FROM MOVIE M WHERE M.MOVIE_RELEASE_DATE > ?1",
+            nativeQuery = true)
+    public List<Movie> getUpcomingMovies(Date currentDate);
+
+    @Query(value = "SELECT * FROM MOVIE M WHERE M.MOVIE_END_DATE < ?1",
+            nativeQuery = true)
+    public List<Movie> getPastMovies(Date currentDate);
 }
 
 
