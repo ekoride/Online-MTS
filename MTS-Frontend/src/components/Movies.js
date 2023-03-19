@@ -2,6 +2,14 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import {Card, Table, Button, ButtonGroup} from 'react-bootstrap';
 import axios from 'axios'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faSave,
+  faPlusSquare,
+  faUndo,
+  faList,
+  faEdit,
+} from "@fortawesome/free-solid-svg-icons";
 export default function Movies() {
     const [movies, setMovies] = useState([]);
     useEffect(() =>{
@@ -20,7 +28,7 @@ export default function Movies() {
     // upcoming movies
   return (
     <Card className='mt-5 border border-light bg-light text-black'>
-        <Card.Header>Movies</Card.Header>
+        <Card.Header><FontAwesomeIcon icon={faList} /> Movies</Card.Header>
         <Card.Body>
             <Table striped>
                 <thead>

@@ -1,11 +1,18 @@
 import React from 'react'
 import { useState } from 'react';
-import {Card} from 'react-bootstrap';
+import {Card, Spinner} from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios'
 import moment from 'moment';
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faSave,
+  faPlusSquare,
+  faUndo,
+  faList,
+  faEdit,
+} from "@fortawesome/free-solid-svg-icons";
 export default function AddMovie() {
     const inital_state = {
         movie_name:'',
@@ -20,7 +27,50 @@ export default function AddMovie() {
     }
     const [formData, setFormData] = useState(inital_state)
 
-    
+   /* Add this spinner logic to the code, to make the entire site neater.
+   function submitMovie(event) {
+  event.preventDefault();
+
+  const movie = {
+    movieName: formData.movie_name,
+    movieCast: formData.movie_cast,
+    movieRating: formData.movie_rating,
+    movieGenre: formData.movie_genre,
+    movieLanguage: formData.movie_language,
+    movieDescription: formData.description,
+    movieReleaseDate: formData.release_date,
+    movieDurationMin: formData.duration,
+    movieEndDate: formData.movie_end_date,
+  };
+
+  setFormData((prevState) => ({ ...prevState, loading: true }));
+
+  axios
+    .post("http://localhost:8080/addNewMovie", movie)
+    .then((response) => {
+      if (response.data != null) {
+        console.log(response);
+        setFormData(inital_state);
+        alert("Movie saved successfully");
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      alert("An error occurred while saving the movie.");
+    })
+    .finally(() => {
+      setFormData((prevState) => ({ ...prevState, loading: false }));
+    });
+}
+{formData.loading && (
+  <div className="text-center my-3">
+    <Spinner animation="border" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </Spinner>
+  </div>
+)}
+
+   */ 
 
     function submitMovie(event) {
         event.preventDefault();
@@ -63,7 +113,7 @@ export default function AddMovie() {
     }
   return (
     <Card className='mt-5 border border-light bg-light text-black'>
-        <Card.Header>Add Movie</Card.Header>
+        <Card.Header><FontAwesomeIcon icon={faPlusSquare} /> Add Movie</Card.Header>
         <Form onReset={resetMovie} onSubmit={ submitMovie} id="movieForm">
         <Card.Body>
                 
@@ -166,10 +216,10 @@ export default function AddMovie() {
             </Card.Body>
             <Card.Footer>
                 <Button size="sm" variant="success" type="submit">
-                    Submit
+                    <FontAwesomeIcon icon={faSave} /> Save
                 </Button>{' '}
                 <Button size="sm" variant="info" type="reset">
-                    Reset
+                    <FontAwesomeIcon icon={faUndo} /> Reset
                 </Button>
             </Card.Footer>
         </Form>
