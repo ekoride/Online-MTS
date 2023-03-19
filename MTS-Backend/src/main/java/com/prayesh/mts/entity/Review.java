@@ -38,22 +38,24 @@ public class Review {
     private long reviewId;
 
     //@Column(name = "review_movie", nullable = false)
-    @ManyToOne
+    @ManyToOne(targetEntity = Movie.class)
     @JoinColumn(
         name = "review_movie",
-        referencedColumnName = "movieId"
+        referencedColumnName = "movieId",
+        nullable = false
     )
     private Movie movieId;
     //@Column(name = "review_user", nullable = false)
     @OneToOne
     @JoinColumn(
         name = "review_userId",
-        referencedColumnName = "userId"
+        referencedColumnName = "userId",
+        nullable = false
     )
     private user customerId;
     @Column(name = "user_review", nullable = false)
     private String userMovieReview;
     @Column(name = "movie_status")
-    private MovieReview movieStatus;
+    private int movieStatus;
 
 }

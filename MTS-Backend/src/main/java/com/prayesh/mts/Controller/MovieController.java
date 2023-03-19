@@ -1,7 +1,9 @@
 package com.prayesh.mts.Controller;
 
 import java.util.List;
+import java.util.Optional;
 
+import com.prayesh.mts.Advice.MovieNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -59,6 +61,14 @@ public class MovieController {
 
 
 
+
+
+    @GetMapping("/{movieId}")
+    public ResponseEntity<Optional<Movie>> getMovieById(@PathVariable @Valid long movieId){
+        return ResponseEntity.ok(movieService.findMovieById(movieId));
+    }
+
+
     @GetMapping("/getPastMovies")
     public ResponseEntity<List<Movie>> getPastMovies(){
         return ResponseEntity.ok(movieService.getPastMovies());
@@ -70,13 +80,13 @@ public class MovieController {
         return ResponseEntity.ok(movieService.getUpcomingMovies());
     }
 
-    @CrossOrigin(origins="http://localhost:3000/")
+    //@CrossOrigin(origins="http://localhost:3000/")
     @GetMapping("/getAllMovies")
     public ResponseEntity<List<Movie>> getAllMovies(){
         return ResponseEntity.ok(movieService.getCurrentMovies()); // What if no movies are returned, Error?
     }
     
-    @CrossOrigin(origins="http://localhost:3000/")
+    //@CrossOrigin(origins="http://localhost:3000/")
     @PostMapping("/addNewMovie")
     public ResponseEntity<Movie> postMovie(@RequestBody @Valid Movie movie){
         return new ResponseEntity<>(movieService.saveMovie(movie), HttpStatus.CREATED);
