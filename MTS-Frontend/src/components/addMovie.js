@@ -90,7 +90,7 @@ export default function AddMovie() {
         axios.post("http://localhost:8080/addNewMovie", movie)
             .then(response => {
                 if(response.data != null){
-                    console.log(response)
+                    // console.log(response)
                     setFormData(inital_state)
                     alert("Movie saved successfully")
                 }
