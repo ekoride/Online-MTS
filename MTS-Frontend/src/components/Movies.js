@@ -1,31 +1,31 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import {Card, Table, Button, ButtonGroup} from 'react-bootstrap';
-import axios from 'axios'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSave,
-  faPlusSquare,
-  faUndo,
-  faList,
-  faEdit,
-} from "@fortawesome/free-solid-svg-icons";
+import { faList } from "@fortawesome/free-solid-svg-icons";
+import { useSelector, useDispatch } from 'react-redux';
+import { getMovies, movieSelector, clearState } from '../features/movies/movieSlice';
+
 export default function Movies() {
     const [movies, setMovies] = useState([]);
+    const dispatch = useDispatch();
+    const [error, setError] = useState('')
+    const { isSuccess, isError, errorMessage, movieArray } = useSelector(
+        movieSelector
+      );
+    
     useEffect(() =>{
-        getMovies()
-    }, [])
+        dispatch(getMovies())
+        setMovies(movieArray) 
+    }, [isSuccess])
 
-    // add the api call here to fetch all the movies
-    function getMovies(){
-        axios.get("http://localhost:8080/getAllMovies")
-            .then((response) => {
-                setMovies(response.data)
-            })
+    useEffect(() => {
+        if (isError) {
+          setError(errorMessage);
+          dispatch(clearState());
+        }
+      }, [isError, isSuccess]);
 
-    }
-
-    // upcoming movies
   return (
     <Card className='mt-5 border border-light bg-light text-black'>
         <Card.Header><FontAwesomeIcon icon={faList} /> Movies</Card.Header>
