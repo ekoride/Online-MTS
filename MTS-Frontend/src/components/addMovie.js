@@ -9,9 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSave,
   faPlusSquare,
-  faUndo,
-  faList,
-  faEdit,
+  faUndo
 } from "@fortawesome/free-solid-svg-icons";
 export default function AddMovie() {
     const inital_state = {
@@ -90,7 +88,7 @@ export default function AddMovie() {
         axios.post("http://localhost:8080/addNewMovie", movie)
             .then(response => {
                 if(response.data != null){
-                    console.log(response)
+                    // console.log(response)
                     setFormData(inital_state)
                     alert("Movie saved successfully")
                 }
@@ -207,12 +205,6 @@ export default function AddMovie() {
                             onChange = {movieChange}  
                             placeholder="End Date" />
                     </Form.Group>
-                
-
-                {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label="Check me out" />
-                </Form.Group> */}
-                
             </Card.Body>
             <Card.Footer>
                 <Button size="sm" variant="success" type="submit">
